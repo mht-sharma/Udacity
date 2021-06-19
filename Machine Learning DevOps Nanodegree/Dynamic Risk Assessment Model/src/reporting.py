@@ -11,20 +11,19 @@ import diagnostics
 
 
 ###############Load config.json and get path variables
-with open('config.json','r') as f:
-    config = json.load(f) 
+with open("config.json", "r") as f:
+    config = json.load(f)
 
-plot_save_path = os.path.join(config['output_model_path'], 'confusionmatrix.png') 
-test_data_path = os.path.join(config['test_data_path'], 'testdata.csv') 
-
+plot_save_path = os.path.join(config["output_model_path"], "confusionmatrix.png")
+test_data_path = os.path.join(config["test_data_path"], "testdata.csv")
 
 
 ##############Function for reporting
 def score_model():
-    #calculate a confusion matrix using the test data and the deployed model
-    #write the confusion matrix to the workspace
+    # calculate a confusion matrix using the test data and the deployed model
+    # write the confusion matrix to the workspace
     df = pd.read_csv(test_data_path)
-    X_test = df.drop(['corporation', 'exited'], axis = 1)
+    X_test = df.drop(["corporation", "exited"], axis=1)
     y_true = df.exited
 
     y_pred = diagnostics.model_predictions(X_test)
@@ -34,5 +33,5 @@ def score_model():
     confusion_matrix_plot.figure.savefig(plot_save_path)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     score_model()
